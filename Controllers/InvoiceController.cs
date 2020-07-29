@@ -5,22 +5,25 @@ using CodeTest.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-[ApiController]
-[Route("api/[controller]")]
-public class InvoiceController : ControllerBase
+namespace CodeTest.Controllers
 {
-    private readonly AdventureWorksLTContext _context;
-
-    public InvoiceController(AdventureWorksLTContext context)
+    [ApiController]
+    [Route("api/[controller]")]
+    public class InvoiceController : ControllerBase
     {
-        _context = context;
-    }
+        private readonly AdventureWorksLTContext _context;
 
-    [HttpGet]
-    public ActionResult<List<Customer>> GetCustomers()
-    {
-        var customers = _context.Customer.ToList();
+        public InvoiceController(AdventureWorksLTContext context)
+        {
+            _context = context;
+        }
 
-        return customers;
+        [HttpGet]
+        public ActionResult<List<Customer>> GetCustomers()
+        {
+            var customers = _context.Customer.ToList();
+
+            return customers;
+        }
     }
 }
