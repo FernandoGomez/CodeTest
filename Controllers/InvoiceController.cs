@@ -18,12 +18,31 @@ namespace CodeTest.Controllers
             _context = context;
         }
 
-        [HttpGet]
-        public ActionResult<List<Customer>> GetCustomers()
+        [HttpGet("invoices")]
+        public ActionResult<List<SalesOrderHeader>> GetInvoices()
         {
-            var customers = _context.Customer.ToList();
+            var invoices = _context.SalesOrderHeader.ToList();
 
-            return customers;
+            return invoices;
+        }
+
+        [HttpGet("invoices-by-customer/{customerId}")]
+        public ActionResult<List<SalesOrderHeader>> GetInvoicesByCustomer(int customerId)
+        {
+            var invoices = _context.SalesOrderHeader.Where(x => x.CustomerId == customerId).ToList();
+
+            return invoices;
+        }
+
+        [HttpGet("invoice-detail/{salesOrderId}")]
+        public ActionResult<SalesOrderHeader> GetInvoiceDetail(int salesOrderId)
+        {
+            var invoice = _context.SalesOrderHeader.FirstOrDefault(invoice => invoice.SalesOrderId == salesOrderId);
+            var details = _context.SalesOrderDetail.Where(detail => detail.SalesOrderId == salesOrderId).ToHashSet();
+            
+            invoice.SalesOrderDetail = details;
+            
+            return invoice;
         }
     }
 }

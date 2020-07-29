@@ -24,6 +24,8 @@ namespace CodeTest
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<AdventureWorksLTContext>(options =>
+                options.UseSqlServer("Name=ConnectionStrings.CodeTest"));
             services.AddControllers();
         }
 

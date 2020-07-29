@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace CodeTest.Controllers
 {
     [ApiController]
-    [Route("api/customer")]
+    [Route("api/[controller]")]
     public class CustomerController : ControllerBase
     {
         private readonly AdventureWorksLTContext _context;
@@ -26,6 +26,14 @@ namespace CodeTest.Controllers
             var customers = _context.Customer.ToList();
 
             return customers;
+        }
+
+        [HttpGet("customers-by-email/{emailAddress}")]
+        public ActionResult<List<Customer>> GetCustomersByEmailAddress(string emailAddress)
+        {
+            var customer = _context.Customer.Where(customer => customer.EmailAddress == emailAddress).ToList();
+
+            return customer;
         }
     }
 }
