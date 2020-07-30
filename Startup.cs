@@ -1,11 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using CodeTest.Contexts;
+using CodeTest.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -27,6 +23,8 @@ namespace CodeTest
             services.AddDbContext<AdventureWorksLTContext>(options =>
                 options.UseSqlServer("Name=ConnectionStrings.CodeTest"));
             services.AddControllers();
+
+            services.AddTransient<ICustomerRepository, CustomerRepository>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

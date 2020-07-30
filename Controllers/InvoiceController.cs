@@ -1,8 +1,7 @@
 using System.Collections.Generic;
-using System.Linq;
 using CodeTest.Contexts;
 using CodeTest.Models;
-using Microsoft.AspNetCore.Http;
+using CodeTest.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CodeTest.Controllers
@@ -12,16 +11,17 @@ namespace CodeTest.Controllers
     public class InvoiceController : ControllerBase
     {
         private readonly AdventureWorksLTContext _context;
+        private readonly IInvoiceRepository _invoiceRepository;
 
-        public InvoiceController(AdventureWorksLTContext context)
+        public InvoiceController(IInvoiceRepository invoiceRepository)
         {
-            _context = context;
+            _invoiceRepository = invoiceRepository;
         }
 
         [HttpGet("invoices")]
         public ActionResult<List<SalesOrderHeader>> GetInvoices()
         {
-            var invoices = _context.SalesOrderHeader.ToList();
+            var invoices = _invoiceRepository.GetInvoices();
 
             return invoices;
         }
@@ -29,7 +29,7 @@ namespace CodeTest.Controllers
         [HttpGet("invoices-by-customer/{customerId}")]
         public ActionResult<List<SalesOrderHeader>> GetInvoicesByCustomer(int customerId)
         {
-            var invoices = _context.SalesOrderHeader.Where(x => x.CustomerId == customerId).ToList();
+            var invoices = _invoiceRepository.GetInvoicesByCustomer(customerId);
 
             return invoices;
         }
@@ -37,10 +37,7 @@ namespace CodeTest.Controllers
         [HttpGet("invoice-detail/{salesOrderId}")]
         public ActionResult<SalesOrderHeader> GetInvoiceDetail(int salesOrderId)
         {
-            var invoice = _context.SalesOrderHeader.FirstOrDefault(invoice => invoice.SalesOrderId == salesOrderId);
-            var details = _context.SalesOrderDetail.Where(detail => detail.SalesOrderId == salesOrderId).ToHashSet();
-            
-            invoice.SalesOrderDetail = details;
+            var invoice = _invoiceRepository.GetInvoiceDetail(salesOrderId);
             
             return invoice;
         }

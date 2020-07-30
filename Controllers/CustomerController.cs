@@ -1,10 +1,6 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using CodeTest.Contexts;
 using CodeTest.Models;
-using Microsoft.AspNetCore.Http;
+using CodeTest.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CodeTest.Controllers
@@ -13,17 +9,17 @@ namespace CodeTest.Controllers
     [Route("api/[controller]")]
     public class CustomerController : ControllerBase
     {
-        private readonly AdventureWorksLTContext _context;
+        private readonly ICustomerRepository _customerRepository;
 
-        public CustomerController(AdventureWorksLTContext context)
+        public CustomerController(ICustomerRepository customerRepository)
         {
-            _context = context;
+            _customerRepository = customerRepository;
         }
 
         [HttpGet("customers")]
         public ActionResult<List<Customer>> GetCustomers()
         {
-            var customers = _context.Customer.ToList();
+            var customers = _customerRepository.GetCustomers();
 
             return customers;
         }
@@ -31,9 +27,9 @@ namespace CodeTest.Controllers
         [HttpGet("customers-by-email/{emailAddress}")]
         public ActionResult<List<Customer>> GetCustomersByEmailAddress(string emailAddress)
         {
-            var customer = _context.Customer.Where(customer => customer.EmailAddress == emailAddress).ToList();
+            var customers = _customerRepository.GetCustomersByEmailAddress(emailAddress);
 
-            return customer;
+            return customers;
         }
     }
 }
