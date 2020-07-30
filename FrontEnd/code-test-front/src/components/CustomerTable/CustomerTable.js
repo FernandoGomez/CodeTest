@@ -12,11 +12,20 @@ const useStyles = makeStyles({
   table: {
     minWidth: 650,
   },
+  tableRow: {
+    cursor: "pointer",
+    "&:hover": {
+      background: "gainsboro",
+      "border-top": "2px solid #858585",
+      "border-bottom": "2px solid #858585",
+    },
+  },
 });
 
 const CustomerTable = ({ isLoading, data, handleRowClick }) => {
   const classes = useStyles();
-
+  const isTouched = !isLoading && data;
+  const hasResults = data && data.length > 0;
   return (
     <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="simple table">
@@ -31,27 +40,42 @@ const CustomerTable = ({ isLoading, data, handleRowClick }) => {
           </TableRow>
         </TableHead>
         {isLoading ? (
-          <span>loading...</span>
-        ) : data.length > 0 ? (
           <TableBody>
-            {data.map((row) => (
-              <TableRow
-                key={row.name}
-                onClick={() => handleRowClick(row.customerId)}
-              >
-                <TableCell component="th" scope="row">
-                  {row.customerId}
-                </TableCell>
-                <TableCell align="right">{row.firstName}</TableCell>
-                <TableCell align="right">{row.lastName}</TableCell>
-                <TableCell align="right">{row.companyName}</TableCell>
-                <TableCell align="right">{row.emailAddress}</TableCell>
-                <TableCell align="right">{row.phone}</TableCell>
-              </TableRow>
-            ))}
+            <TableRow>
+              <TableCell>Searching...</TableCell>
+            </TableRow>
           </TableBody>
+        ) : isTouched ? (
+          hasResults ? (
+            <TableBody>
+              {data.map((row) => (
+                <TableRow
+                  className={classes.tableRow}
+                  key={row.name}
+                  onClick={() => handleRowClick(row.customerId)}
+                >
+                  <TableCell component="th" scope="row">
+                    {row.customerId}
+                  </TableCell>
+                  <TableCell align="right">{row.firstName}</TableCell>
+                  <TableCell align="right">{row.lastName}</TableCell>
+                  <TableCell align="right">{row.companyName}</TableCell>
+                  <TableCell align="right">{row.emailAddress}</TableCell>
+                  <TableCell align="right">{row.phone}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          ) : (
+            <TableBody>
+              <TableRow>
+                <TableCell>No Results.</TableCell>
+              </TableRow>
+            </TableBody>
+          )
         ) : (
-          <span>no results</span>
+          <TableBody>
+            <TableRow></TableRow>
+          </TableBody>
         )}
       </Table>
     </TableContainer>

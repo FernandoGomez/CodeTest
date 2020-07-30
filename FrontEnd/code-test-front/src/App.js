@@ -5,39 +5,30 @@ import SearchBar from "./components/SearchBar/SearchBar";
 import CustomerTable from "./components/CustomerTable/CustomerTable";
 import InvoiceTable from "./components/InvoiceTable/InvoiceTable";
 import Customers from "./components/Customers/Customers";
+import { searchForCustomerByEmail } from "./services/CustomerApiService";
 
 function App() {
-  const [customers, setCustomers] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
   const [customerEmailAddress, setCustomerEmailAddress] = useState();
-  const [selectedCustomerId, setSelectedCustomerId] = useState();
+  const [customers, setCustomers] = useState();
+  const [isLoading, setIsLoading] = useState(false);
+  // const [selectedCustomerId, setSelectedCustomerId] = useState();
 
-  const searchForCustomer = (searchTerm) => {
-    console.log(`searching for ${searchTerm}`);
+  const searchForCustomer = customerEmailAddress => {
     setIsLoading(true);
-    fetch(
-      `http://localhost:24811/api/customer/customers-by-email/${searchTerm}`,
-      {
-        method: "GET",
-        headers: new Headers({
-          Accept: "application/json",
-        }),
-      }
-    )
+    searchForCustomerByEmail(customerEmailAddress)
       .then((res) => res.json())
       .then(
         (response) => {
-          setCustomers(response);
           setIsLoading(false);
+          setCustomers(response || []);
         },
         (error) => {
-          console.error(error);
+          //TODO: Log this error:  Jira/Story link here.
           setIsLoading(false);
+          setCustomers([]);
         }
       );
-  };
-
-  
+  }
 
   return (
     <div className="App">
@@ -56,11 +47,11 @@ function App() {
         />
       </section>
       <section>
-        <Customers customerEmailAddress={customerEmailAddress} />
+        <Customers isLoading={isLoading} data={customers} />
       </section>
-      {selectedCustomerId && (
+      {/* {selectedCustomerId && (
         <InvoiceTable />
-      )}
+      )} */}
     </div>
   );
 }
