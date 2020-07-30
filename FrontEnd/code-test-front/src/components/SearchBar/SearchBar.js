@@ -1,0 +1,53 @@
+import React, { useState } from "react";
+import IconButton from "@material-ui/core/IconButton";
+import Input from "@material-ui/core/Input";
+import InputLabel from "@material-ui/core/InputLabel";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import FormControl from "@material-ui/core/FormControl";
+import SearchIcon from "@material-ui/icons/Search";
+import TextField from "@material-ui/core/TextField";
+
+const SearchBar = ({
+  searchFunction,
+  variant,
+  margin,
+  required,
+  fullWidth,
+  id,
+  label,
+  name,
+  autoFocus,
+}) => {
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const handleChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const handleSubmit = (event) => {
+    searchFunction(searchTerm);
+    event.preventDefault();
+  };
+
+  return (
+    <form noValidate onSubmit={handleSubmit}>
+      <TextField
+        value={searchTerm}
+        onChange={handleChange}
+        variant={variant}
+        margin={margin}
+        required={required}
+        fullWidth={fullWidth}
+        id={id}
+        label={label}
+        name={name}
+        autoComplete="email"
+        autoFocus={autoFocus}
+      />
+    </form>
+  );
+};
+
+export const Component = SearchBar;
+
+export default SearchBar;
