@@ -3,10 +3,13 @@ import logo from "./logo.svg";
 import "./App.css";
 import SearchBar from "./components/SearchBar/SearchBar";
 import CustomerTable from "./components/CustomerTable/CustomerTable";
+import InvoiceTable from "./components/InvoiceTable/InvoiceTable";
+import Customers from "./components/Customers/Customers";
 
 function App() {
   const [customers, setCustomers] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [customerEmailAddress, setCustomerEmailAddress] = useState();
   const [selectedCustomerId, setSelectedCustomerId] = useState();
 
   const searchForCustomer = (searchTerm) => {
@@ -33,9 +36,8 @@ function App() {
         }
       );
   };
-  const handleRowClick = customerId => {
-    setSelectedCustomerId(customerId);
-  };
+
+  
 
   return (
     <div className="App">
@@ -54,15 +56,10 @@ function App() {
         />
       </section>
       <section>
-        Customer results:
-        <CustomerTable
-          isLoading={isLoading}
-          data={customers}
-          handleRowClick={handleRowClick}
-        />
+        <Customers customerEmailAddress={customerEmailAddress} />
       </section>
       {selectedCustomerId && (
-        <span>You selected me:  {selectedCustomerId}</span>
+        <InvoiceTable />
       )}
     </div>
   );
