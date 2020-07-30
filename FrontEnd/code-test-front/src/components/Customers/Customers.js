@@ -1,7 +1,5 @@
-import React, { useState } from "react";
-import SearchBar from "../SearchBar/SearchBar";
+import React from "react";
 import CustomerTable from "../CustomerTable/CustomerTable";
-import { searchForCustomerByEmail } from "../../services/CustomerApiService";
 
 const Customers = ({isLoading, data, handleRowClick}) => {
   return (

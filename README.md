@@ -1,20 +1,32 @@
 # Introduction 
-TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project. 
+This is a simple demonstration of an EF setup, working in .NET Core, with a
+React front-end.
+
+This assignment is very open ended, so it was hard to know when to be "done".
+As I could spend a considerable amount of time on this.
+
+For the sake of time, and simplicity, I chose to keep the solution small and to
+the point.  That's why you won't see a Redux implementation, or Stored
+Procedures with EF.
+
+Another thing to note, is that the styles are basic.  In a production app, I
+would of course either match what the business asks for, or create something
+beautiful.  That's an iterative process, and takes longer than a couple of days, however.
 
 # Getting Started
-TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
-1.	Installation process
-2.	Software dependencies
-3.	Latest releases
-4.	API references
+To run this:
 
-# Build and Test
-TODO: Describe and show how to build your code and run the tests. 
+1. CD into the FrontEnd/code-test-front folder.
+2. Run `yarn build`. This adds the React front-end to the wwwroot folder.
+3. Then start the dotnet core app the way you normally would.
 
-# Contribute
-TODO: Explain how other users and developers can contribute to make your code better. 
+# Notes
+The app might have an issue connecting to the database, as I'm using Microsoft's
+Secret Manager.
 
-If you want to learn more about creating good readme files then refer the following [guidelines](https://docs.microsoft.com/en-us/azure/devops/repos/git/create-a-readme?view=azure-devops). You can also seek inspiration from the below readme files:
-- [ASP.NET Core](https://github.com/aspnet/Home)
-- [Visual Studio Code](https://github.com/Microsoft/vscode)
-- [Chakra Core](https://github.com/Microsoft/ChakraCore)
+To use this, run:
+`dotnet user-secrets init`
+Then:
+`dotnet user-secrets set "ConnectionStrings.CodeTest" "letmein2020!"`
+
+After this, it should work.
