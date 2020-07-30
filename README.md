@@ -21,7 +21,7 @@ To run this:
 3. Then start the dotnet core app the way you normally would.
 
 # Notes
-The app might have an issue connecting to the database, as I'm using Microsoft's
+The app will have an issue connecting to the database, as I'm using Microsoft's
 Secret Manager.
 
 To use this, run:
@@ -30,3 +30,10 @@ Then:
 `dotnet user-secrets set "ConnectionStrings.CodeTest" "letmein2020!"`
 
 After this, it should work.
+
+# Deployed
+This app is currently deployed at:
+
+        `https://hire-fernando-gomez.azurewebsites.net/`
+
+It's live and you can test it now.
