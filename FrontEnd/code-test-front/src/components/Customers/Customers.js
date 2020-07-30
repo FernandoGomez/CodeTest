@@ -3,14 +3,7 @@ import SearchBar from "../SearchBar/SearchBar";
 import CustomerTable from "../CustomerTable/CustomerTable";
 import { searchForCustomerByEmail } from "../../services/CustomerApiService";
 
-const Customers = ({isLoading, data}) => {
-  
-
-  const handleRowClick = (customerId) => {
-    // setSelectedCustomerId(customerId);
-    console.log(`selecting customer ${customerId}`);
-  };
-
+const Customers = ({isLoading, data, handleRowClick}) => {
   return (
       <CustomerTable
         isLoading={isLoading}

@@ -4,17 +4,20 @@ import "./App.css";
 import SearchBar from "./components/SearchBar/SearchBar";
 import CustomerTable from "./components/CustomerTable/CustomerTable";
 import InvoiceTable from "./components/InvoiceTable/InvoiceTable";
-import Customers from "./components/Customers/Customers";
 import { searchForCustomerByEmail } from "./services/CustomerApiService";
 
 function App() {
-  const [customerEmailAddress, setCustomerEmailAddress] = useState();
   const [customers, setCustomers] = useState();
   const [isLoading, setIsLoading] = useState(false);
-  // const [selectedCustomerId, setSelectedCustomerId] = useState();
+  const [selectedCustomerId, setSelectedCustomerId] = useState();
 
-  const searchForCustomer = customerEmailAddress => {
+  const hasSearched = !isLoading && customers;
+
+  const searchForCustomer = (customerEmailAddress) => {
+    setSelectedCustomerId();
+    setCustomers();
     setIsLoading(true);
+
     searchForCustomerByEmail(customerEmailAddress)
       .then((res) => res.json())
       .then(
@@ -28,12 +31,13 @@ function App() {
           setCustomers([]);
         }
       );
-  }
+  };
 
   return (
     <div className="App">
+      <h1>Fernando's Code Test</h1>
       <section>
-        <p>Search for a customer:</p>
+        <h2>Search for a customer:</h2>
         <SearchBar
           searchFunction={searchForCustomer}
           variant="outlined"
@@ -46,12 +50,21 @@ function App() {
           autoFocus={true}
         />
       </section>
-      <section>
-        <Customers isLoading={isLoading} data={customers} />
-      </section>
-      {/* {selectedCustomerId && (
-        <InvoiceTable />
-      )} */}
+      {hasSearched && (
+        <section>
+          <CustomerTable
+            isLoading={isLoading}
+            data={customers}
+            handleRowClick={setSelectedCustomerId}
+            selectedId={selectedCustomerId}
+          />
+        </section>
+      )}
+      {selectedCustomerId && (
+        <section>
+          <InvoiceTable customerId={selectedCustomerId} />
+        </section>
+      )}
     </div>
   );
 }

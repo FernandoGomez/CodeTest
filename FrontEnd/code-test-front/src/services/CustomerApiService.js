@@ -8,3 +8,14 @@ export const searchForCustomerByEmail = (customerEmailAddress) =>
       }),
     }
   );
+
+export const searchForInvoicesByCustomerId = (customerId) =>
+  fetch(
+    `http://localhost:24811/api/invoice/invoices-by-customer/${customerId}`,
+    {
+      method: "GET",
+      headers: new Headers({
+        Accept: "application/json",
+      }),
+    }
+  );
