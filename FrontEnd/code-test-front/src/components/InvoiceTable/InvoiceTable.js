@@ -24,6 +24,7 @@ const InvoiceTable = ({ customerId }) => {
 
   useEffect(() => {
     if (customerId) {
+      setInvoices();
       setIsLoading(true);
       searchForInvoicesByCustomerId(customerId)
         .then((res) => res.json())
@@ -40,7 +41,7 @@ const InvoiceTable = ({ customerId }) => {
           }
         );
     }
-  }, [customerId]); // Only re-run the effect if count changes
+  }, [customerId]);
 
   const classes = useStyles();
   const isTouched = !isLoading && invoices;

@@ -10,8 +10,6 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [selectedCustomerId, setSelectedCustomerId] = useState();
 
-  const hasSearched = !isLoading && customers;
-
   // I'm not a huge fan of having this logic here, but
   // the alternative is to use Redux, or something similar.
   // Because of time constraints, I chose not to do so here.
@@ -28,7 +26,7 @@ function App() {
           setCustomers(response || []);
         },
         (error) => {
-          console.error(error)
+          console.error(error);
           //TODO: Log this error:  Jira/Story link here.
           setIsLoading(false);
           setCustomers([]);
@@ -53,16 +51,14 @@ function App() {
           autoFocus={true}
         />
       </section>
-      {hasSearched && (
-        <section>
-          <CustomerTable
-            isLoading={isLoading}
-            data={customers}
-            handleRowClick={setSelectedCustomerId}
-            selectedId={selectedCustomerId}
-          />
-        </section>
-      )}
+      <section>
+        <CustomerTable
+          isLoading={isLoading}
+          data={customers}
+          handleRowClick={setSelectedCustomerId}
+          selectedId={selectedCustomerId}
+        />
+      </section>
       {selectedCustomerId && (
         <section>
           <InvoiceTable customerId={selectedCustomerId} />
