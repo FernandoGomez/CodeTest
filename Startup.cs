@@ -25,6 +25,7 @@ namespace CodeTest
             services.AddControllers();
 
             services.AddTransient<ICustomerRepository, CustomerRepository>();
+            services.AddTransient<IInvoiceRepository, InvoiceRepository>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
