@@ -19,6 +19,7 @@ namespace CodeTest.Models
         public string CompanyName { get; set; }
         public string SalesPerson { get; set; }
         public string EmailAddress { get; set; }
+        public string Phone { get; set; }
         public string PasswordHash { get; set; }
         public string PasswordSalt { get; set; }
         public Guid Rowguid { get; set; }
