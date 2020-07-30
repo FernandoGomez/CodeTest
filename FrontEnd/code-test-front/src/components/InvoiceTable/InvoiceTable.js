@@ -10,18 +10,11 @@ import Paper from "@material-ui/core/Paper";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { searchForInvoicesByCustomerId } from "../../services/CustomerApiService";
 import { formatCurrency } from "../../utils/currency";
+import { formatDateTime } from "../../utils/dateTime";
 
 const useStyles = makeStyles({
   center: {
     textAlign: "center",
-  },
-  tableRow: {
-    cursor: "pointer",
-    "&:hover": {
-      background: "gainsboro",
-      "border-top": "2px solid #858585",
-      "border-bottom": "2px solid #858585",
-    },
   },
 });
 
@@ -40,6 +33,7 @@ const InvoiceTable = ({ customerId }) => {
             setInvoices(response || []);
           },
           (error) => {
+            console.error(error)
             //TODO: Log this error:  Jira/Story link here.
             setIsLoading(false);
             setInvoices([]);
@@ -75,13 +69,13 @@ const InvoiceTable = ({ customerId }) => {
               {hasResults ? (
                 <TableBody>
                 {invoices.map((row) => (
-                  <TableRow className={classes.tableRow} key={row.name}>
+                  <TableRow key={row.name}>
                     <TableCell component="th" scope="row">
                       {row.salesOrderId}
                     </TableCell>
-                    <TableCell align="right">{row.orderDate}</TableCell>
-                    <TableCell align="right">{row.dueDate}</TableCell>
-                    <TableCell align="right">{row.shipDate}</TableCell>
+                    <TableCell align="right">{formatDateTime(row.orderDate)}</TableCell>
+                    <TableCell align="right">{formatDateTime(row.dueDate)}</TableCell>
+                    <TableCell align="right">{formatDateTime(row.shipDate)}</TableCell>
                     <TableCell align="right">{row.status}</TableCell>
                     <TableCell align="right">
                       {formatCurrency(row.totalDue)}

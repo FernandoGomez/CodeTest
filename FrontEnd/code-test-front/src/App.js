@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import logo from "./logo.svg";
 import "./App.css";
 import SearchBar from "./components/SearchBar/SearchBar";
 import CustomerTable from "./components/CustomerTable/CustomerTable";
@@ -13,6 +12,9 @@ function App() {
 
   const hasSearched = !isLoading && customers;
 
+  // I'm not a huge fan of having this logic here, but
+  // the alternative is to use Redux, or something similar.
+  // Because of time constraints, I chose not to do so here.
   const searchForCustomer = (customerEmailAddress) => {
     setSelectedCustomerId();
     setCustomers();
@@ -26,6 +28,7 @@ function App() {
           setCustomers(response || []);
         },
         (error) => {
+          console.error(error)
           //TODO: Log this error:  Jira/Story link here.
           setIsLoading(false);
           setCustomers([]);
